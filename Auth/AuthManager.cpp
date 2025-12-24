@@ -1,6 +1,6 @@
 #include "../data/storage.h"
 #include <iostream>
-#include <algorithm> 
+#include <algorithm>
 using namespace std;
 
 void signup() {
@@ -23,7 +23,7 @@ void signup() {
             continue;
         }
 
-        break; 
+        break;
     }
     if (attempts == 3) {
         cout << "Too many failed attempts. Returning to menu." << endl;
@@ -167,14 +167,14 @@ void changePassword(string username) {
             attempts++;
             continue;
         }
-        break; 
+        break;
     }
     if (attempts == 3) {
         cout << "Too many failed attempts. Returning to menu." << endl;
         return;
     }
 
-    
+
     attempts = 0;
     while (attempts < 3) {
         cout << "Enter new password (min 8 chars, include number & symbol): ";

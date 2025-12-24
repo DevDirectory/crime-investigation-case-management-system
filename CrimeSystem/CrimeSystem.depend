@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1743445502 source:c:\users\ephra\projects\dsa_crime_investigation_case_management_system\crime-investigation-case-management-system\crimesystem\main.cpp
+	<iostream>
+
+1766222110 source:c:\users\ephra\projects\dsa_crime_investigation_case_management_system\crime-investigation-case-management-system\data\storage.cpp
+	"storage.h"
+
+1766222110 c:\users\ephra\projects\dsa_crime_investigation_case_management_system\crime-investigation-case-management-system\data\storage.h
+	<string>
+	<map>
+	<list>
+
+1766587754 source:c:\users\ephra\projects\dsa_crime_investigation_case_management_system\crime-investigation-case-management-system\main.cpp
+	<iostream>
+	"data/storage.h"
+	"Cases/CaseManager.h"
+	"Auth/AuthManager.h"
+
+1766586562 c:\users\ephra\projects\dsa_crime_investigation_case_management_system\crime-investigation-case-management-system\cases\casemanager.h
+	<string>
+
+1766587608 c:\users\ephra\projects\dsa_crime_investigation_case_management_system\crime-investigation-case-management-system\auth\authmanager.h
+	<string>
+
