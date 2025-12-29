@@ -94,6 +94,7 @@ cd crime-management-system
 ```bash
 g++ main.cpp cases/case.cpp suspects/suspect.cpp officers/officer.cpp evidence/evidence.cpp -o ccims_system
 
+
 ```
 
 

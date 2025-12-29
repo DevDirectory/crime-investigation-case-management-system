@@ -1,13 +1,11 @@
-
-#ifndef AUTHMANAGER_H
-#define AUTHMANAGER_H
+#ifndef AUTH_MANAGER_H
+#define AUTH_MANAGER_H
 
 #include <string>
 using namespace std;
 
-void signup();
-void login();
-void changePassword(string username);
-void logout(string username);
+bool login(string &role);
+void changePassword();
+bool logoutMenu();   // returns true if user wants to exit program
 
 #endif

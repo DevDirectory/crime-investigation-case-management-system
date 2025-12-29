@@ -1,92 +1,91 @@
-#include "../data/storage.h"
 #include <iostream>
-#include <string>
+#include <fstream>
+#include "case.h"
+
 using namespace std;
 
-// Linked list node for case management
-struct CaseNode {
-    int caseID;
-    string description;
-    CaseNode* next;   // pointer to the next case
+struct Case {
+    int id;
+    char title[50];
+    char status[20];
+    Case* next;
 };
 
-CaseNode* head = nullptr;  // initially, no cases
+Case* head = NULL;
 
-// Add a new case
-void addCase(int caseID, string description) {
-    CaseNode* newCase = new CaseNode();
-    newCase->caseID = caseID;
-    newCase->description = description;
-    newCase->next = nullptr;
-
-    if (head == nullptr) {
-        head = newCase;
-    } else {
-        CaseNode* temp = head;
-        while (temp->next != nullptr) {
-            temp = temp->next;
-        }
-        temp->next = newCase;
+void saveCasesToFile() {
+    ofstream file("data/cases.txt");
+    Case* t = head;
+    while (t) {
+        file << t->id << " " << t->title << " " << t->status << endl;
+        t = t->next;
     }
-    cout << "Case " << caseID << " added successfully.\n";
+    file.close();
 }
 
-// View all cases
-void viewCases() {
-    if (head == nullptr) {
-        cout << "No cases available.\n";
-        return;
-    }
-    CaseNode* temp = head;
-    while (temp != nullptr) {
-        cout << "Case ID: " << temp->caseID
-             << " | Description: " << temp->description << endl;
-        temp = temp->next;
+void addCase() {
+    Case* n = new Case;
+    cout << "Case ID: ";
+    cin >> n->id;
+    cout << "Title: ";
+    cin >> n->title;
+    cout << "Status: ";
+    cin >> n->status;
+
+    n->next = head;
+    head = n;
+
+    saveCasesToFile();
+    cout<<"Case Added!";
+}
+
+void viewCase() {
+    Case* t = head;
+    while (t) {
+        cout << t->id << " " << t->title << " " << t->status << endl;
+        t = t->next;
     }
 }
 
-// Update a case description
-void updateCase(int caseID, string newDescription) {
-    CaseNode* temp = head;
-    while (temp != nullptr) {
-        if (temp->caseID == caseID) {
-            temp->description = newDescription;
-            cout << "Case " << caseID << " updated successfully.\n";
+void updateCase() {
+    int id;
+    cout << "Enter Case ID to update: ";
+    cin >> id;
+
+    Case* t = head;
+    while (t) {
+        if (t->id == id) {
+            cout << "New Title: ";
+            cin >> t->title;
+            cout << "New Status: ";
+            cin >> t->status;
+            saveCasesToFile();
+            cout << "Case updated\n";
             return;
         }
-        temp = temp->next;
+        t = t->next;
     }
-    cout << "Case not found.\n";
+    cout << "Case not found\n";
 }
 
-// Delete a case
-void deleteCase(int caseID) {
-    if (head == nullptr) {
-        cout << "No cases to delete.\n";
-        return;
+void deleteCase() {
+    int id;
+    cout << "Enter Case ID to delete: ";
+    cin >> id;
+
+    Case *t = head, *p = NULL;
+
+    while (t && t->id != id) {
+        p = t;
+        t = t->next;
     }
 
-    // If head is the case to delete
-    if (head->caseID == caseID) {
-        CaseNode* toDelete = head;
-        head = head->next;
-        delete toDelete;
-        cout << "Case " << caseID << " deleted successfully.\n";
-        return;
-    }
+    if (!t) return;
 
-    // Search for the case
-    CaseNode* temp = head;
-    while (temp->next != nullptr && temp->next->caseID != caseID) {
-        temp = temp->next;
-    }
+    if (!p) head = t->next;
+    else p->next = t->next;
 
-    if (temp->next == nullptr) {
-        cout << "Case not found.\n";
-    } else {
-        CaseNode* toDelete = temp->next;
-        temp->next = temp->next->next;
-        delete toDelete;
-        cout << "Case " << caseID << " deleted successfully.\n";
-    }
+    delete t;
+    saveCasesToFile();
+    cout << "Case deleted\n";
 }
