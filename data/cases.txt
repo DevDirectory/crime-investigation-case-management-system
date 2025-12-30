@@ -1,3 +1,4 @@
-1|Fingerprint|Added
-2|Camera Footage|Added
-3|Person|Added
+4|Missing Person|Under_investigation
+3|Bank_Robbery|Closed
+2|Robery|Opened
+1|Homicide|Opened

@@ -94,7 +94,7 @@ void addCase()
     head = n;
 
     saveCasesToFile();
-    cout << "Case Added!";
+    cout << "Case Added!\n";
 }
 
 void viewCase(bool isAdmin)
