@@ -13,6 +13,34 @@ struct Case
 };
 
 Case *head = NULL;
+bool casesLoaded = false;
+
+void loadCasesFromFile()
+{
+    if (casesLoaded)
+        return;
+
+    ifstream file("data/cases.txt");
+    if (!file.is_open())
+        return;
+
+    while (true)
+    {
+        Case *n = new Case;
+        if (file >> n->id >> n->title >> n->status)
+        {
+            n->next = head;
+            head = n;
+        }
+        else
+        {
+            delete n;
+            break;
+        }
+    }
+
+    casesLoaded = true;
+}
 
 void saveCasesToFile()
 {
@@ -28,6 +56,8 @@ void saveCasesToFile()
 
 void addCase()
 {
+    loadCasesFromFile();
+
     Case *n = new Case;
     cout << "Case ID: ";
     cin >> n->id;
@@ -45,6 +75,8 @@ void addCase()
 
 void viewCase(bool isAdmin)
 {
+    loadCasesFromFile();
+
     Case *t = head;
 
     if (isAdmin)
@@ -76,6 +108,8 @@ void viewCase(bool isAdmin)
 
 void updateCase()
 {
+    loadCasesFromFile();
+
     int id;
     cout << "Enter Case ID to update: ";
     cin >> id;
@@ -100,6 +134,8 @@ void updateCase()
 
 void deleteCase()
 {
+    loadCasesFromFile();
+
     int id;
     cout << "Enter Case ID to delete: ";
     cin >> id;
