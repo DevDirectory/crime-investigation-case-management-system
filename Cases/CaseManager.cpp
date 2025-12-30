@@ -119,6 +119,8 @@ void updateCase()
     {
         if (t->id == id)
         {
+            cout << "Current Title: " << t->title << "\n";
+            cout << "Current Status: " << t->status << "\n";
             cout << "New Title: ";
             cin >> t->title;
             cout << "New Status: ";
