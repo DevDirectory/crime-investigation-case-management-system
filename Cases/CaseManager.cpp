@@ -175,8 +175,8 @@ void deleteCase()
     cout << "Enter Case ID to delete: ";
     cin >> id;
 
-    Case *t = head, *p = NULL;
 
+<<<<<<< Updated upstream
     while (t && t->id != id)
     {
         p = t;
@@ -190,8 +190,28 @@ void deleteCase()
         head = t->next;
     else
         p->next = t->next;
+=======
+    Case *current = head;
+    Case *previous = NULL;
 
-    delete t;
+    while (current != NULL && current->id != id) {
+        previous = current;
+        current = current->next;
+    }
+
+    if (current == NULL) {
+        cout << "Error: Case ID " << id << " not found." << endl;
+        return;
+    }
+
+    if (previous == NULL) { 
+        head = current->next;
+    } else { 
+        previous->next = current->next;
+    }
+>>>>>>> Stashed changes
+
+    delete current; 
     saveCasesToFile();
-    cout << "Case deleted\n";
+    cout << "Case " << id << " deleted successfully." << endl;
 }

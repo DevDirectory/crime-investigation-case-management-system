@@ -1,4 +1,9 @@
+<<<<<<< Updated upstream
 1|Homicide|Opened
 2|Cyber attack|Opened
 3|Bank_Robbery|Closed
 4|Missing Person|Under_investigation
+=======
+226 robery closed
+123 murder opend
+>>>>>>> Stashed changes
