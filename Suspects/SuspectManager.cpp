@@ -64,6 +64,8 @@ void updateSuspect() {
         }
         t = t->next;
     }
+
+    cout<<"Suspect Not found!";
 }
 
 void deleteSuspect() {
