@@ -151,6 +151,7 @@ void updateCase()
     {
         if (t->id == id)
         {
+            cout << "Selected Case: " << t->id << " " << t->title << " " << t->status << "\n";
             cout << "Current Title: " << t->title << "\n";
             cout << "Current Status: " << t->status << "\n";
             cout << "New Title: ";
