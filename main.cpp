@@ -8,15 +8,15 @@
 #include "Officers/Officer.h"
 #include "Evidence/Evidence.h"
 
-
 using namespace std;
 
 /* ===== MENUS ===== */
 
-
-void adminMenu() {
+void adminMenu()
+{
     int c;
-    do {
+    do
+    {
         cout << "\n--- ADMIN MENU ---\n";
         cout << left << setw(28) << "  1. Add Case"           << "2. Update Case" << endl;
         cout << left << setw(28) << "  3. Delete Case"        << "4. View Case" << endl;
@@ -36,68 +36,119 @@ void adminMenu() {
             continue;
         } 
 
-        switch (c) {
-            case 1: addCase(); break;
-            case 2: updateCase(); break;
-            case 3: deleteCase(); break;
-            case 4: viewCase(); break;
-            case 5: addSuspect(); break;
-            case 6: updateSuspect(); break;
-            case 7: deleteSuspect(); break;
-            case 8: viewSuspect(); break;
-            case 9: addOfficer(); break;
-            case 10: viewOfficer(); break;
-            case 11: assignInvestigator(); break;
-            case 12: addEvidence(); break;
-            case 13: updateInvestigationStatus(); break;
-            case 14: viewEvidence(); break;
-            case 15: changePassword(); break;
-            case 0: cout << "Logging out...\n"; break;
-            default:
-                cout << "\n[!] " << c << " is not a valid option. Try 0-15.\n";
-                break;
+        switch (c)
+        {
+        case 1:
+            addCase();
+            break;
+        case 2:
+            updateCase();
+            break;
+        case 3:
+            deleteCase();
+            break;
+        case 4:
+            viewCase(true);
+            break;
+
+        case 5:
+            addSuspect();
+            break;
+        case 6:
+            updateSuspect();
+            break;
+        case 7:
+            deleteSuspect();
+            break;
+        case 8:
+            viewSuspect();
+            break;
+
+        case 9:
+            addOfficer();
+            break;
+        case 10:
+            viewOfficer();
+            break;
+        case 11:
+            assignInvestigator();
+            break;
+
+        case 12:
+            addEvidence();
+            break;
+        case 13:
+            updateInvestigationStatus();
+            break;
+        case 14:
+            viewEvidence();
+            break;
+        case 15:
+            changePassword();
+            break;
         }
     } while (c != 0);
 }
 
-
-void officerMenu() {
+void officerMenu()
+{
     int c;
-    do {
+    do
+    {
         cout << "\n--- OFFICER MENU ---\n";
         cout << "1 View Case\n2 View Suspect\n3 View Evidence\n0 Logout\nChoice: ";
         cin >> c;
 
-        switch (c) {
-            case 1: viewCase(); break;
-            case 2: viewSuspect(); break;
-            case 3: viewEvidence(); break;
+        switch (c)
+        {
+        case 1:
+            viewCase(false);
+            break;
+        case 2:
+            viewSuspect();
+            break;
+        case 3:
+            viewEvidence();
+            break;
         }
     } while (c != 0);
 }
 
-void investigatorMenu() {
+void investigatorMenu()
+{
     int c;
-    do {
+    do
+    {
         cout << "\n--- INVESTIGATOR MENU ---\n";
         cout << "1 View Case\n2 Update Case\n3 Update Evidence Status\n4 View Evidence\n0 Logout\nChoice: ";
         cin >> c;
 
-        switch (c) {
-            case 1: viewCase(); break;
-            case 2: updateCase(); break;
-            case 3: updateInvestigationStatus(); break;
-            case 4: viewEvidence(); break;
+        switch (c)
+        {
+        case 1:
+            viewCase(false);
+            break;
+        case 2:
+            updateCase();
+            break;
+        case 3:
+            updateInvestigationStatus();
+            break;
+        case 4:
+            viewEvidence();
+            break;
         }
     } while (c != 0);
 }
 
 /* ===== MAIN ===== */
 
-int main() {
+int main()
+{
     bool exitSystem = false;
 
-    while (!exitSystem) {
+    while (!exitSystem)
+    {
         string role;
 
         if (!login(role))

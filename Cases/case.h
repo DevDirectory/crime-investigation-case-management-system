@@ -2,7 +2,7 @@
 #define CASE_H
 
 void addCase();
-void viewCase();
+void viewCase(bool isAdmin);
 void updateCase();
 void deleteCase();
 void saveCasesToFile();
