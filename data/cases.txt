@@ -1,3 +1,4 @@
-1|Fingerprint|Added
+8|New one|open
+3|Nothing|Closed
 2|Camera Footage|Added
-3|Person|Added
+1|Fingerprint|Added

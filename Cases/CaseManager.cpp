@@ -1,163 +1,64 @@
 #include <iostream>
 #include <fstream>
-#include <sstream>
-#include <string>
 #include "case.h"
 
 using namespace std;
 
-struct Case
-{
+struct Case {
     int id;
-    string title;
-    string status;
-    Case *next;
+    char title[50];
+    char status[20];
+    Case* next;
 };
 
-Case *head = NULL;
-bool casesLoaded = false;
+Case* head = NULL;
 
-void loadCasesFromFile()
-{
-    if (casesLoaded)
-        return;
-
-    ifstream file("data/cases.txt");
-    if (!file.is_open())
-        return;
-
-    string line;
-    while (getline(file, line))
-    {
-        if (line.empty())
-            continue;
-
-        Case *n = new Case;
-
-        if (line.find('|') != string::npos)
-        {
-            stringstream ss(line);
-            string idStr;
-            if (!getline(ss, idStr, '|'))
-            {
-                delete n;
-                continue;
-            }
-            n->id = stoi(idStr);
-            getline(ss, n->title, '|');
-            getline(ss, n->status, '|');
-        }
-        else
-        {
-            stringstream ss(line);
-            if (!(ss >> n->id >> n->title >> n->status))
-            {
-                delete n;
-                continue;
-            }
-        }
-
-        n->next = head;
-        head = n;
-    }
-
-    casesLoaded = true;
-}
-
-void saveCasesToFile()
-{
+void saveCasesToFile() {
     ofstream file("data/cases.txt");
-    Case *t = head;
-    while (t)
-    {
-        file << t->id << "|" << t->title << "|" << t->status << endl;
+    Case* t = head;
+    while (t) {
+        file << t->id << " " << t->title << " " << t->status << endl;
         t = t->next;
     }
     file.close();
 }
 
-void addCase()
-{
-    loadCasesFromFile();
-
-    Case *n = new Case;
+void addCase() {
+    Case* n = new Case;
     cout << "Case ID: ";
     cin >> n->id;
-    cin.ignore();
-
     cout << "Title: ";
-    getline(cin, n->title);
+    cin >> n->title;
     cout << "Status: ";
-    getline(cin, n->status);
+    cin >> n->status;
 
     n->next = head;
     head = n;
 
     saveCasesToFile();
-    cout << "Case Added!";
+    cout<<"Case Added!";
 }
 
-void viewCase(bool isAdmin)
-{
-    loadCasesFromFile();
-
-    if (!head)
-    {
-        cout << "No cases found\n";
-        return;
-    }
-
-    if (isAdmin)
-    {
-        Case *t = head;
-        while (t)
-        {
-            cout << t->id << " " << t->title << " " << t->status << endl;
-            t = t->next;
-        }
-        return;
-    }
-
-    int id;
-    cout << "Enter Case ID to view: ";
-    cin >> id;
-    cin.ignore();
-
-    Case *t = head;
-    while (t)
-    {
-        if (t->id == id)
-        {
-            cout << t->id << " " << t->title << " " << t->status << endl;
-            return;
-        }
+void viewCase() {
+    Case* t = head;
+    while (t) {
+        cout << t->id << " " << t->title << " " << t->status << endl;
         t = t->next;
     }
-
-    cout << "Case not found\n";
 }
 
-void updateCase()
-{
-    loadCasesFromFile();
-
+void updateCase() {
     int id;
     cout << "Enter Case ID to update: ";
     cin >> id;
-    cin.ignore();
 
-    Case *t = head;
-    while (t)
-    {
-        if (t->id == id)
-        {
-            cout << "Selected Case: " << t->id << " " << t->title << " " << t->status << "\n";
-            cout << "Current Title: " << t->title << "\n";
-            cout << "Current Status: " << t->status << "\n";
+    Case* t = head;
+    while (t) {
+        if (t->id == id) {
             cout << "New Title: ";
-            getline(cin, t->title);
+            cin >> t->title;
             cout << "New Status: ";
-            getline(cin, t->status);
+            cin >> t->status;
             saveCasesToFile();
             cout << "Case updated\n";
             return;
@@ -167,29 +68,22 @@ void updateCase()
     cout << "Case not found\n";
 }
 
-void deleteCase()
-{
-    loadCasesFromFile();
-
+void deleteCase() {
     int id;
     cout << "Enter Case ID to delete: ";
     cin >> id;
 
     Case *t = head, *p = NULL;
 
-    while (t && t->id != id)
-    {
+    while (t && t->id != id) {
         p = t;
         t = t->next;
     }
 
-    if (!t)
-        return;
+    if (!t) return;
 
-    if (!p)
-        head = t->next;
-    else
-        p->next = t->next;
+    if (!p) head = t->next;
+    else p->next = t->next;
 
     delete t;
     saveCasesToFile();
