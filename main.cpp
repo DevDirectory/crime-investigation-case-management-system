@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <iomanip>
 
 #include "Auth/AuthManager.h"
 #include "Cases/case.h"
@@ -17,12 +18,23 @@ void adminMenu()
     do
     {
         cout << "\n--- ADMIN MENU ---\n";
-        cout << "1 Add Case\n2 Update Case\n3 Delete Case\n4 View Case\n";
-        cout << "5 Add Suspect\n6 Update Suspect\n7 Delete Suspect\n8 View Suspect\n";
-        cout << "9 Add Officer\n10 View Officer\n11 Assign Investigator\n";
-        cout << "12 Add Evidence\n13 Update Evidence Status\n14 View Evidence\n";
-        cout << "15 Change Password\n0 Logout\nChoice: ";
-        cin >> c;
+        cout << left << setw(28) << "  1. Add Case"           << "2. Update Case" << endl;
+        cout << left << setw(28) << "  3. Delete Case"        << "4. View Case" << endl;
+        cout << left << setw(28) << "  5. Add Suspect"        << "6. Update Suspect" << endl;
+        cout << left << setw(28) << "  7. Delete Suspect"     << "8. View Suspect" << endl;
+        cout << left << setw(28) << "  9. Add Officer"        << "10. View Officer" << endl;
+        cout << left << setw(28) << "  11. Assign Investigator" << "12. Add Evidence" << endl;
+        cout << left << setw(28) << "  13. Update Evidence"   << "14. View Evidence" << endl;
+        cout << left << setw(28) << "  15. Change Password"   << "0. Logout" << endl;
+        cout << "Choice: ";
+
+        if (!(cin >> c)) {
+            cout << "\n[!] Invalid input! Please enter a number.\n";
+            cin.clear(); 
+            cin.ignore(1000, '\n'); 
+            c = -1;
+            continue;
+        } 
 
         switch (c)
         {
