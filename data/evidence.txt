@@ -1,2 +1,9 @@
+<<<<<<< HEAD
+2|Starting out|blal
+3|Nothing found|open
+5|Notihing is there|None
+1|blah blah blay|found
+=======
 113|a handgun stained with victims blood|found_there
 114|Blood_Sample|DNA_Sequencing
+>>>>>>> c393e14e916d956062c84a52ac4caf2551800413

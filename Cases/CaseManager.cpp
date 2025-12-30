@@ -1,7 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <sstream>
-#include <string>
 #include "case.h"
 
 using namespace std;
@@ -9,8 +7,8 @@ using namespace std;
 struct Case
 {
     int id;
-    string title;
-    string status;
+    char title[50];
+    char status[20];
     Case *next;
 };
 
@@ -26,39 +24,19 @@ void loadCasesFromFile()
     if (!file.is_open())
         return;
 
-    string line;
-    while (getline(file, line))
+    while (true)
     {
-        if (line.empty())
-            continue;
-
         Case *n = new Case;
-
-        if (line.find('|') != string::npos)
+        if (file >> n->id >> n->title >> n->status)
         {
-            stringstream ss(line);
-            string idStr;
-            if (!getline(ss, idStr, '|'))
-            {
-                delete n;
-                continue;
-            }
-            n->id = stoi(idStr);
-            getline(ss, n->title, '|');
-            getline(ss, n->status, '|');
+            n->next = head;
+            head = n;
         }
         else
         {
-            stringstream ss(line);
-            if (!(ss >> n->id >> n->title >> n->status))
-            {
-                delete n;
-                continue;
-            }
+            delete n;
+            break;
         }
-
-        n->next = head;
-        head = n;
     }
 
     casesLoaded = true;
@@ -70,7 +48,7 @@ void saveCasesToFile()
     Case *t = head;
     while (t)
     {
-        file << t->id << "|" << t->title << "|" << t->status << endl;
+        file << t->id << " " << t->title << " " << t->status << endl;
         t = t->next;
     }
     file.close();
@@ -83,33 +61,26 @@ void addCase()
     Case *n = new Case;
     cout << "Case ID: ";
     cin >> n->id;
-    cin.ignore();
-
     cout << "Title: ";
-    getline(cin, n->title);
+    cin >> n->title;
     cout << "Status: ";
-    getline(cin, n->status);
+    cin >> n->status;
 
     n->next = head;
     head = n;
 
     saveCasesToFile();
-    cout << "Case Added!\n";
+    cout << "Case Added!";
 }
 
 void viewCase(bool isAdmin)
 {
     loadCasesFromFile();
 
-    if (!head)
-    {
-        cout << "No cases found\n";
-        return;
-    }
+    Case *t = head;
 
     if (isAdmin)
     {
-        Case *t = head;
         while (t)
         {
             cout << t->id << " " << t->title << " " << t->status << endl;
@@ -121,9 +92,7 @@ void viewCase(bool isAdmin)
     int id;
     cout << "Enter Case ID to view: ";
     cin >> id;
-    cin.ignore();
 
-    Case *t = head;
     while (t)
     {
         if (t->id == id)
@@ -144,20 +113,18 @@ void updateCase()
     int id;
     cout << "Enter Case ID to update: ";
     cin >> id;
-    cin.ignore();
 
     Case *t = head;
     while (t)
     {
         if (t->id == id)
         {
-            cout << "Selected Case: " << t->id << " " << t->title << " " << t->status << "\n";
             cout << "Current Title: " << t->title << "\n";
             cout << "Current Status: " << t->status << "\n";
             cout << "New Title: ";
-            getline(cin, t->title);
+            cin >> t->title;
             cout << "New Status: ";
-            getline(cin, t->status);
+            cin >> t->status;
             saveCasesToFile();
             cout << "Case updated\n";
             return;

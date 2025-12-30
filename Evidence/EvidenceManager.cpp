@@ -1,73 +1,99 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <string>
+#include <cstring>
+#include <limits> // Required for numeric_limits
 #include <limits>
 
 using namespace std;
 
-struct Evidence {
+struct Evidence
+{
     int id;
     char desc[50];
     char status[20];
-    Evidence* next;
+    Evidence *next;
 };
 
-Evidence* top = NULL;
+Evidence *top = NULL;
+bool evidenceLoaded = false;
 
-/* ===== FILE SAVE ===== */
-void saveEvidenceToFile() {
-    ofstream f("data/evidence.txt");
-    if (!f) {
-        cout << "Error saving evidence file.\n";
+void loadEvidenceFromFile()
+{
+    if (evidenceLoaded)
         return;
+
+    ifstream f("data/evidence.txt");
+    if (!f.is_open())
+        return;
+
+    string line;
+    while (getline(f, line))
+    {
+        if (line.empty())
+            continue;
+
+        Evidence *n = new Evidence;
+        stringstream ss(line);
+        string idStr, descStr, statusStr;
+
+        if (!getline(ss, idStr, '|'))
+        {
+            delete n;
+            continue;
+        }
+        if (!getline(ss, descStr, '|'))
+        {
+            delete n;
+            continue;
+        }
+        if (!getline(ss, statusStr, '|'))
+        {
+            delete n;
+            continue;
+        }
+
+        n->id = stoi(idStr);
+        strncpy(n->desc, descStr.c_str(), sizeof(n->desc) - 1);
+        n->desc[sizeof(n->desc) - 1] = '\0';
+        strncpy(n->status, statusStr.c_str(), sizeof(n->status) - 1);
+        n->status[sizeof(n->status) - 1] = '\0';
+        n->next = top;
+        top = n;
     }
 
-    Evidence* t = top;
-    while (t) {
-        f << t->id << "|" << t->desc << "|" << t->status << endl;
+    evidenceLoaded = true;
+}
+
+void saveEvidenceToFile()
+{
+    // Note: Ensure the "data" folder exists, or use "evidence.txt"
+    ofstream f("data/evidence.txt");
+    if (!f)
+    {
+        cout << "Error opening file for writing!" << endl;
+        return;
+    }
+    Evidence *t = top;
+    while (t)
+    {
+        f << t->id << "|" << t->desc << "|" << t->status << endl; // Use delimiters
         t = t->next;
     }
     f.close();
 }
 
-/* ===== FILE LOAD ===== */
-void loadEvidenceFromFile() {
-    ifstream f("data/evidence.txt");
-    if (!f) return;
+void addEvidence()
+{
+    loadEvidenceFromFile();
 
-    // Clear existing stack
-    while (top) {
-        Evidence* temp = top;
-        top = top->next;
-        delete temp;
-    }
+    Evidence *n = new Evidence;
 
-    Evidence* tail = NULL;
-    char line[100];
-
-    while (f.getline(line, 100)) {
-        Evidence* n = new Evidence;
-
-        // Parse line: id|desc|status
-        sscanf(line, "%d|%49[^|]|%19[^\n]", &n->id, n->desc, n->status);
-        n->next = NULL;
-
-        // Preserve order
-        if (!top) {
-            top = tail = n;
-        } else {
-            tail->next = n;
-            tail = n;
-        }
-    }
-    f.close();
-}
-
-/* ===== ADD ===== */
-void addEvidence() {
-    Evidence* n = new Evidence;
-
-    cout << "Evidence ID: ";
+    cout << "ID: ";
     cin >> n->id;
+
+    // Clear the buffer after reading an int so getline doesn't skip
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "Description: ";
@@ -83,39 +109,37 @@ void addEvidence() {
     cout << "Evidence added successfully.\n";
 }
 
-/* ===== VIEW ===== */
-void viewEvidence() {
-    if (!top) {
-        cout << "No evidence recorded.\n";
+void viewEvidence()
+{
+    loadEvidenceFromFile();
+
+    if (!top)
+    {
+        cout << "No evidence recorded." << endl;
         return;
     }
-
-    Evidence* t = top;
-    cout << "\n--- EVIDENCE LIST ---\n";
-    while (t) {
-        cout << "ID: " << t->id
-             << "\nDescription: " << t->desc
-             << "\nStatus: " << t->status
-             << "\n--------------------\n";
+    Evidence *t = top;
+    while (t)
+    {
+        cout << "[" << t->id << "] " << t->desc << " - Status: " << t->status << endl;
         t = t->next;
     }
 }
 
-/* ===== UPDATE STATUS ===== */
-void updateInvestigationStatus() {
-    if (!top) {
-        cout << "No evidence available.\n";
-        return;
-    }
+void updateInvestigationStatus()
+{
+    loadEvidenceFromFile();
 
     int id;
     cout << "Enter Evidence ID: ";
     cin >> id;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    Evidence* t = top;
-    while (t) {
-        if (t->id == id) {
+    Evidence *t = top;
+    while (t)
+    {
+        if (t->id == id)
+        {
             cout << "Current Status: " << t->status << endl;
             cout << "New Status: ";
             cin.getline(t->status, 20);

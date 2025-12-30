@@ -84,10 +84,10 @@ void deleteSuspect() {
             if (prev) {
                 prev->next = t->next;
             } else {
-                front = t->next; // deleting the first node
+                front = t->next; 
             }
             if (t == rear) {
-                rear = prev; // update rear if last node is deleted
+                rear = prev; 
             }
             delete t;
             cout << "Deleted successfully.\n";
@@ -97,6 +97,5 @@ void deleteSuspect() {
         prev = t;
         t = t->next;
     }
-
     cout << "Suspect with ID " << id << " not found.\n";
 }
