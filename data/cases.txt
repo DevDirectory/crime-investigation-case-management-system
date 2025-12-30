@@ -1,4 +1,4 @@
-4|Missing Person|Under_investigation
-3|Bank_Robbery|Closed
-2|Robery|Opened
 1|Homicide|Opened
+2|Cyber attack|Opened
+3|Bank_Robbery|Closed
+4|Missing Person|Under_investigation
