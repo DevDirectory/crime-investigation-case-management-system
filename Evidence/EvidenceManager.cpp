@@ -4,6 +4,7 @@
 #include <string>
 #include <cstring>
 #include <limits> // Required for numeric_limits
+#include <limits>
 
 using namespace std;
 
@@ -105,7 +106,7 @@ void addEvidence()
     top = n;
 
     saveEvidenceToFile();
-    cout << "Evidence added successfully!" << endl;
+    cout << "Evidence added successfully.\n";
 }
 
 void viewEvidence()
@@ -130,7 +131,7 @@ void updateInvestigationStatus()
     loadEvidenceFromFile();
 
     int id;
-    cout << "Evidence ID to update: ";
+    cout << "Enter Evidence ID: ";
     cin >> id;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
@@ -142,11 +143,13 @@ void updateInvestigationStatus()
             cout << "Current Status: " << t->status << endl;
             cout << "New Status: ";
             cin.getline(t->status, 20);
+
             saveEvidenceToFile();
-            cout << "Status updated." << endl;
+            cout << "Status updated successfully.\n";
             return;
         }
         t = t->next;
     }
-    cout << "Evidence ID not found." << endl;
+
+    cout << "Evidence ID not found.\n";
 }

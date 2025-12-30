@@ -1,4 +1,16 @@
+<<<<<<< HEAD
 8|New one|open
 3|Nothing|Closed
 2|Camera Footage|Added
 1|Fingerprint|Added
+=======
+<<<<<<< Updated upstream
+1|Homicide|Opened
+2|Cyber attack|Opened
+3|Bank_Robbery|Closed
+4|Missing Person|Under_investigation
+=======
+226 robery closed
+123 murder opend
+>>>>>>> Stashed changes
+>>>>>>> c393e14e916d956062c84a52ac4caf2551800413
