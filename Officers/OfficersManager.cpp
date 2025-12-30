@@ -123,9 +123,10 @@ void assignInvestigator()
         {
             t->caseId = cid;
             saveOfficersToFile();
-            cout << "Assigned\n";
-            return;
+            cout << "Assigned successfully.\n";
+            return; 
         }
         t = (oid < t->id) ? t->left : t->right;
     }
+    cout << "Error: Officer with ID " << oid << " not found." << endl;
 }
